@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import Title from '../components/Title'
 import RecipeItem, { recipeShape } from './RecipeItem'
 import './RecipesContainer.css'
+import { connect } from 'react-redux'
+import RecipeEditor from './RecipeEditor'
 
 class RecipesContainer extends PureComponent {
   static propTypes = {
@@ -24,14 +26,19 @@ class RecipesContainer extends PureComponent {
       <div className="recipes wrapper">
         <header>
           <Title content="Recipes" />
+          <RecipeEditor />
         </header>
 
         <main>
-          {this.props.recipes.map(this.renderRecipe)}
+          { this.props.recipes.map(this.renderRecipe.bind(this)) }
         </main>
       </div>
     )
   }
 }
 
-export default RecipesContainer
+const mapStateToProps = ({ recipes }) => ({
+  recipes
+})
+
+export default connect(mapStateToProps)(RecipesContainer)

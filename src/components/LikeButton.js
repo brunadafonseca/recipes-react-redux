@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import HeartGrey from '../images/heart-grey.svg'
 import HeartRed from '../images/heart-red.svg'
 import './LikeButton.css'
+import { connect } from 'react-redux'
 
 class LikeButton extends PureComponent {
   static propTypes = {
@@ -20,17 +21,12 @@ class LikeButton extends PureComponent {
     return classes
   }
 
-  toggleLike() {
-    console.log('[LikeButton]: Like button clicked!')
-    this.props.onChange()
-  }
-
   render() {
     const { liked } = this.props
 
     return (
       <p className={ this.classNames() }>
-        <button onClick={ this.toggleLike.bind(this) }>
+        <button onClick={ this.props.toggleLike() }>
           <img alt="like" className="heart" src={ liked ? HeartRed : HeartGrey } />
           <span className="copy">
             <img alt="like" className="heart" src={ liked ? HeartRed : HeartGrey } />
@@ -42,4 +38,8 @@ class LikeButton extends PureComponent {
   }
 }
 
-export default LikeButton
+const mapStateToProps = ({ recipes }) => ({
+  recipes
+})
+
+export default connect({ mapStateToProps })(LikeButton)
