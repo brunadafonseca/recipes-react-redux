@@ -1,10 +1,8 @@
 export const TOGGLE_LIKE = 'TOGGLE_LIKE'
 
-export default () => {
+export default (id) => {
   return {
     type: TOGGLE_LIKE,
-    payload: {
-      liked: true
-    }
+    id
   }
 }

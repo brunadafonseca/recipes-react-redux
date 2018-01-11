@@ -1,7 +1,4 @@
-import { CREATE_RECIPE } from '../actions/recipes/create'
-import { TOGGLE_LIKE } from '../actions/recipes/like'
-
-const initialState = [
+export const recipes = [
   {
     _id: 'abcd123',
     title: 'Spanish Omelette',
@@ -44,15 +41,12 @@ const initialState = [
   },
 ]
 
-export default (state = initialState, { type, payload } = {}) => {
-  switch (type) {
-    case CREATE_RECIPE:
-      return [Object.assign({}, payload)].concat(state)
-
-    case TOGGLE_LIKE:
-      return [Object.assign({}, payload)].concat(state)
-
-    default:
-      return state
+export default function(state = recipes, action = {}) {
+  if (action.type === 'TOGGLE_LIKE') {
+    return state.map((recipe) => {
+      if (recipe._id !== action.payload) return recipe
+      return { ...recipe, liked: !recipe.liked }
+    })
   }
+  return state
 }

@@ -93,7 +93,7 @@ class RecipeEditor extends PureComponent {
           className="title"
           placeholder="Title"
           defaultValue={this.state.title}
-          onChange={this.updateTitle.bind(this)}
+          onClick={this.updateTitle.bind(this)}
           onKeyDown={this.updateTitle.bind(this)} />
 
         <Editor
@@ -101,7 +101,7 @@ class RecipeEditor extends PureComponent {
           options={{
             placeholder: {text: 'Write an Introduction...'}
           }}
-          onChange={this.updateIntro.bind(this)}
+          onClick={this.updateIntro.bind(this)}
           text={this.state.summary} />
 
         <input
@@ -110,12 +110,12 @@ class RecipeEditor extends PureComponent {
           className="photo"
           placeholder="Photo URL"
           defaultValue={this.state.photo}
-          onChange={this.updatePhoto.bind(this)}
+          onClick={this.updatePhoto.bind(this)}
           onKeyDown={this.updatePhoto.bind(this)} />
 
         {TYPES.map((type) => {
           return <label key={type} htmlFor={type}>
-            <input id={type} type="radio" name="type" value={type} onChange={this.setType.bind(this)} />
+            <input id={type} type="radio" name="type" value={type} onClick={this.setType.bind(this)} />
             {type}
           </label>
         })}

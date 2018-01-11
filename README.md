@@ -445,7 +445,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleClick}>Load</button>
+        <button onChange={this.handleClick}>Load</button>
       </div>
     );
   }
