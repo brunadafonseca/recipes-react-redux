@@ -5,6 +5,8 @@ import LikeButton from '../components/LikeButton'
 import './RecipeItem.css'
 import { toggleLike } from '../actions/recipes'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import Title from '../components/Title'
 
 const PLACEHOLDER = 'http://via.placeholder.com/500x180?text=No%20Image'
 
@@ -31,11 +33,14 @@ class RecipeItem extends PureComponent {
   }
 
   render() {
-    const { title, summary, vegan, vegetarian, pescatarian, photo, liked } = this.props
+    const { title, summary, vegan, vegetarian, pescatarian, photo, liked, _id } = this.props
     const categories = { vegan, vegetarian, pescatarian }
 
     return(
       <article className="RecipeItem">
+      <Link to={ `/recipes/${_id}` }>
+        <Title content={ title } />
+      </Link>
         <header>
           <div
             className="cover"

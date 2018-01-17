@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import 'medium-editor/dist/css/medium-editor.css'
 import 'medium-editor/dist/css/themes/default.css'
 import './RecipeEditor.css'
-import createRecipe from '../actions/recipes/create'
+import { createRecipe } from '../actions/recipes'
 
 const TYPES = [
   'vegan',
@@ -51,7 +51,6 @@ class RecipeEditor extends PureComponent {
     })
   }
 
-
   setType(event) {
     this.setState({
       vegan: event.target.value === 'vegan',
@@ -61,27 +60,14 @@ class RecipeEditor extends PureComponent {
   }
 
   saveRecipe() {
-    const {
-      title,
-      summary,
-      vegetarian,
-      vegan,
-      pescatarian,
-      photo,
-    } = this.state
-
     const recipe = {
-      title,
-      summary: toMarkdown(summary),
-      vegetarian,
-      vegan,
-      pescatarian,
-      liked: false,
-      photo,
+      ...this.state,
+      summary: toMarkdown(this.state.summary),
+      liked: false
     }
 
     console.log(recipe)
-    this.props.createRecipe(recipe)
+    this.props.save(recipe)
   }
 
   render() {
@@ -93,15 +79,15 @@ class RecipeEditor extends PureComponent {
           className="title"
           placeholder="Title"
           defaultValue={this.state.title}
-          onClick={this.updateTitle.bind(this)}
-          onKeyDown={this.updateTitle.bind(this)} />
+          onChange={this.updateTitle.bind(this)}
+          onKeyUp={this.updateTitle.bind(this)} />
 
         <Editor
           ref="summary"
           options={{
             placeholder: {text: 'Write an Introduction...'}
           }}
-          onClick={this.updateIntro.bind(this)}
+          onChange={this.updateIntro.bind(this)}
           text={this.state.summary} />
 
         <input
@@ -110,12 +96,12 @@ class RecipeEditor extends PureComponent {
           className="photo"
           placeholder="Photo URL"
           defaultValue={this.state.photo}
-          onClick={this.updatePhoto.bind(this)}
-          onKeyDown={this.updatePhoto.bind(this)} />
+          onChange={this.updatePhoto.bind(this)}
+          onKeyUp={this.updatePhoto.bind(this)} />
 
         {TYPES.map((type) => {
           return <label key={type} htmlFor={type}>
-            <input id={type} type="radio" name="type" value={type} onClick={this.setType.bind(this)} />
+            <input id={type} type="radio" name="type" value={type} onChange={this.setType.bind(this)} />
             {type}
           </label>
         })}
@@ -128,4 +114,6 @@ class RecipeEditor extends PureComponent {
   }
 }
 
-export default connect(null, { createRecipe })(RecipeEditor)
+const mapDispatchToProps = { save: createRecipe }
+
+export default connect(null, mapDispatchToProps)(RecipeEditor)

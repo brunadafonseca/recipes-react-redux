@@ -5,17 +5,21 @@ import RecipeItem, { recipeShape } from './RecipeItem'
 import './RecipesContainer.css'
 import { connect } from 'react-redux'
 import RecipeEditor from './RecipeEditor'
+import { fetchRecipes } from '../actions/recipes'
 
 class RecipesContainer extends PureComponent {
   static propTypes = {
     recipes: PropTypes.arrayOf(recipeShape).isRequired,
   }
 
+  componentWillMount() {
+    //dispatch the result of an action creator(fetchRecipes)
+    // this.props.dispatch(fetchRecipes())
+    this.props.fetch()
+  }
+
   renderRecipe = (recipe, index) => {
-    return <RecipeItem
-      key={index}
-      { ...recipe }
-    />
+    return <RecipeItem key={index} { ...recipe } />
   }
 
   render() {
@@ -27,15 +31,15 @@ class RecipesContainer extends PureComponent {
         </header>
 
         <main>
-          { this.props.recipes.map(this.renderRecipe)}
+          { this.props.recipes.map(this.renderRecipe) }
         </main>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ recipes }) => ({
-  recipes
-})
+const mapStateToProps = ({ recipes }) => ({ recipes })
 
-export default connect(mapStateToProps)(RecipesContainer)
+const mapDispatchToProps = { fetch: fetchRecipes }
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecipesContainer)

@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
-import RecipesContainer from './recipes/RecipesContainer'
 import './App.css'
+import Routes from './routes'
+import LoadErrors from './components/LoadErrors'
+import Loading from './components/Loading'
+import Navigation from './components/Navigation'
 
 class App extends Component {
-  updateRecipe(id, update) {
-    return null
-  }
-
   render() {
     return (
-      <div className="App">
-        <RecipesContainer
-          updateRecipe={this.updateRecipe.bind(this)} />
+      <div>
+        <Navigation />
+        <Loading />
+        <Routes />
+        <LoadErrors />
       </div>
     )
   }
